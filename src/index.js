@@ -15,5 +15,5 @@ app.listen(app.get('port'), () => {
 app.use(express.json()); // Comprende notacion json
 
 //Routes/url
-
+app.use(require('./routes/employees'));
 
