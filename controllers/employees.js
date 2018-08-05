@@ -1,8 +1,6 @@
-const express = require('express');
-const router = express.Router(); // Crea un objeto para definir rutas en el srv
-const mysqlConnection = require('../database');
+const mysqlConnection = require('../db/database');
 
-router.get('/', (req, res) => {
+exports.getAllEmployees = (req, res) => {
     mysqlConnection.query('SELECT * FROM employees', (err, rows, fields) => {
         if(!err) {
             res.json(rows);
@@ -10,9 +8,9 @@ router.get('/', (req, res) => {
             console.log(err);
         }
     });
-});
+};
 
-router.get('/:id', (req, res) => {
+exports.getEmployeeById = (req, res) => {
     const { id } = req.params;
     mysqlConnection.query('SELECT * FROM employees WHERE id = ?', [id], (err, rows, fields) => {
         if(!err) {
@@ -21,9 +19,9 @@ router.get('/:id', (req, res) => {
             console.log(err);
         }
     });
-});
+};
 
-router.post('/', (req, res) => {
+exports.addEmployee = (req, res) => {
     const { id, name, salary} =req.body;
     const query = `CALL employeeAddOrEdit(?, ?, ?);
     `;
@@ -34,9 +32,9 @@ router.post('/', (req, res) => {
             console.log(err);
         }
     });
-});
+};
 
-router.put('/:id', (req, res) => {
+exports.upEmployee = (req, res) => {
     const { name, salary } = req.body; // Obtenemos los datos que queremos actualzar
     const { id } = req.params;
 
@@ -48,10 +46,9 @@ router.put('/:id', (req, res) => {
             console.log(err);
         }
     });
-});
+};
 
-
-router.delete('/:id', (req, res) => {
+exports.downEmployee = (req, res) => {
     const { id } = req.params;
     mysqlConnection.query('DELETE FROM employees WHERE id = ?', [id], (err, rows, fields) => {
         if(!err) {
@@ -60,7 +57,4 @@ router.delete('/:id', (req, res) => {
             console.log(err);
         }
     });
-});
-
-// Exportamos la constante
-module.exports = router;
+};

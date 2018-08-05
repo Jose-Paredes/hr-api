@@ -3,8 +3,7 @@ const mysql = require('mysql');
 // Recibe un obj de conf/retorna un obj de cn
 const mysqlConnection = mysql.createConnection({
     host: 'localhost',
-    user: 'jose_paredes',
-    password: '190391ar',
+    user: 'root',
     database: 'hr_api'
 });
 
